@@ -1,14 +1,36 @@
+import { useDispatch, useSelector } from "react-redux";
+import {
+  incriment,
+  decriment,
+  addTodo,
+  deleteTodo,
+} from "./vanillaRedux/mainReducer";
+
 function App() {
+  const dispatch = useDispatch();
+  const count = useSelector((state) => state.main.count);
+  const todos = useSelector((state) => state.main.todos);
+
   return (
     <div>
-      <h1 style={styles.h1}>Count</h1>
-      <button style={styles.btn}>INC</button>
-      <button style={styles.btn}>DEC</button>
-      <button style={styles.btn}>ADD TASK</button>
-      <button style={styles.btn}>DELETE TASK</button>
+      <h1 style={styles.h1}>Count: {count}</h1>
+      <button style={styles.btn} onClick={() => dispatch(incriment())}>
+        INC
+      </button>
+      <button style={styles.btn} onClick={() => dispatch(decriment())}>
+        DEC
+      </button>
+      <button style={styles.btn} onClick={() => dispatch(addTodo(prompt()))}>
+        ADD TASK
+      </button>
+      <button style={styles.btn} onClick={() => dispatch(deleteTodo())}>
+        DELETE TASK
+      </button>
       <button style={styles.btn}>ADD ASYNC TASK</button>
       <ul>
-        <li style={styles.item}>Test list</li>
+        {todos.map((item) => (
+          <li style={styles.item}>{item}</li>
+        ))}
       </ul>
     </div>
   );
