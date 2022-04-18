@@ -4,12 +4,18 @@ import {
   decriment,
   addTodo,
   deleteTodo,
-} from "./vanillaRedux/mainReducer";
+} from "./toolkitRedux/toolkitSlice";
+
+const addAsyncTodo = () => {
+  return async (dispatch) => {
+    setTimeout(() => dispatch(addTodo("ASYNC TODO")), 2000);
+  };
+};
 
 function App() {
   const dispatch = useDispatch();
-  const count = useSelector((state) => state.main.count);
-  const todos = useSelector((state) => state.main.todos);
+  const count = useSelector((state) => state.toolkit.count);
+  const todos = useSelector((state) => state.toolkit.todos);
 
   return (
     <div>
@@ -26,7 +32,9 @@ function App() {
       <button style={styles.btn} onClick={() => dispatch(deleteTodo())}>
         DELETE TASK
       </button>
-      <button style={styles.btn}>ADD ASYNC TASK</button>
+      <button style={styles.btn} onClick={() => dispatch(addAsyncTodo())}>
+        ADD ASYNC TASK
+      </button>
       <ul>
         {todos.map((item) => (
           <li style={styles.item}>{item}</li>
